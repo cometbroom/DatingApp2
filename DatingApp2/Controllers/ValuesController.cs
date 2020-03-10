@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingApp2.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class ValuesController : ControllerBase
@@ -28,11 +30,11 @@ namespace DatingApp.API.Controllers
             return Ok(values);  //IActionResult needs the ok method which make an http response.
 		}
 
-		// GET api/values/5
+		[AllowAnonymous]
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetValue(int id)
 		{
-            var     value = await _context.Values.FirstOrDefaultAsync(x => x.Id == id);  //Default value is null.  
+            var     value = await _context.Values.FirstOrDefaultAsync(x => x.Id == id);  //Default value is null. Firstordefault is a microsoft entity framework.  
 			return Ok(value);
 		}
 
