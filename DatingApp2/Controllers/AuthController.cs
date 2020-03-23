@@ -32,7 +32,7 @@ namespace DatingApp2.Controllers
 			userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
 			if (await _repo.UserExists(userForRegisterDto.Username))
-				return BadRequest("userForRegisterDto.Username Already Exists");
+				return BadRequest($"User {userForRegisterDto.Username} Already Exists");
 
 			var userToCreate = new User
 			{
@@ -47,7 +47,7 @@ namespace DatingApp2.Controllers
 		[HttpPost("login")]
 		public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
 		{
-
+			// throw new Exception("Computer says no");
             //Repository attempts login and returns the user object from database. So use repo for login, register etc...
 			var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
