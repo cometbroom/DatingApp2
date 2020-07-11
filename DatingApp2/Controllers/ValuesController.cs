@@ -17,6 +17,7 @@ namespace DatingApp.API.Controllers
 		private readonly DataContext _context;
 		public ValuesController(DataContext context)
 		{
+			//To bring the data context in and use it as a field to access database
 			_context = context;
 
 		}

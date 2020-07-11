@@ -34,18 +34,21 @@ namespace DatingApp2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Data.DataContext>(x => x.UseSqlite
-            (Configuration.GetConnectionString("DefaultConnections")));
+                (Configuration.GetConnectionString("DefaultConnections")));
             services.AddControllers();
             services.AddCors();
+
+            //To add services per every request but use the same one in that request. Add singleton would create once which would be problematic.
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
-                        .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                            .GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
